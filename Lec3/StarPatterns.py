@@ -1,10 +1,14 @@
 n = 10
 row = 1
+nst = n
 while row <= n:
-    i = 1
-    while i <= n:
+    #Work to be done
+    cst = 1
+    while cst <= nst:
         print("*",end=" ")
-        i += 1
+        cst += 1
+    
+    # Updation
     print()
     row += 1
 
