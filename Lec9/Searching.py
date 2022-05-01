@@ -4,7 +4,7 @@ def search(ll,ele):
     i = 0
     j = len(ll[0])-1
 
-    while i < len(ll)-1 and j > 0:
+    while i < len(ll) and j >= 0:
         if ll[i][j] == ele:
             return True
         elif ll[i][j] > ele:
@@ -14,4 +14,4 @@ def search(ll,ele):
     
     return False
 
-print(search(ll,13))
+print(search(ll,1))
