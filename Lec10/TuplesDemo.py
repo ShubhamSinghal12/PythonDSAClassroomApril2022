@@ -12,32 +12,34 @@
 # t3 = t1+t2
 # print(t3,type(t3))
 
-t = (1,2,3,4,5,6)
-a,*b ,c= t
-print(a,b,c,type(a))
+# t = (1,2,3,4,5,6)
+# a,*b ,c= t
+# print(a,b,c,type(a))
 
-l = list(t)
-print(l)
+# l = list(t)
+# print(l)
 
-t1 = tuple(l)
-print(t1)
+# t1 = tuple(l)
+# print(t1)
 
-for i in t1:
-    print(i)
+# for i in t1:
+#     print(i)
 
-t = 1,2,3,4
-t = 1,
-print(t,type(t))
+# t = 1,2,3,4
+# t = 1,
+# print(t,type(t))
 
-a,b = 10,20
+# a,b = 10,20
 
-def fn():
-    a = 10
-    b = 20
-    return a,b
+# def fn():
+#     a = 10
+#     b = 20
+#     return a,b
 
-a,b = fn()
-print(a,b)
+# a,b = fn()
+# print(a,b)
 
-
+t = [1,2]
+t1 = [1,2]
+print(t is t1)
 
