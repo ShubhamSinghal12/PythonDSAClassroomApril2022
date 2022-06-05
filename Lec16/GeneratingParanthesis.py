@@ -4,8 +4,8 @@ def gp(op,cl,ans):
     elif op < 0 or cl < op:
         return
     else:
-        gp(op-1,cl,ans +"(")
         gp(op,cl-1,ans+")")
+        gp(op-1,cl,ans +"(")
 
 gp(3,3,"")
 
