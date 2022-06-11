@@ -14,6 +14,7 @@ def ccc(l,amount,ans,lp):
         return 
     else:
         for i in range(lp,len(l)):
+            
             ccc(l,amount-l[i],ans+str(l[i]),i)
 
 def ccc2(l,amount,ans):
