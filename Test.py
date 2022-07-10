@@ -1,6 +1,5 @@
-import imp
-from Lec25.MyStack import MyStack
+import sys
+import os
 
-st = MyStack(5)
-
-
+# sys.path.append("/Users/axyz/Desktop/CBPythonLecture/PythonMarch2022")
+sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
