@@ -138,18 +138,112 @@ class MyLinkedList:
         else:
             self.__rR2(prev.next)
             prev.next.next = prev
+    
+    def kreverse(self,k=3):
+        self.head = self.__kr(self.head,k)
+
+    def __kr(self,cur,k):
+        if cur == None:
+            return None
+        else:
+            temp = cur
+            s = k
+            while temp != None and s >= 1:
+                temp = temp.next
+                s -= 1
+            
+            prev = self.__kr(temp,k)
+
+            while cur!=temp:
+                ahead = cur.next
+                cur.next = prev
+                prev = cur
+                cur = ahead
+            
+            return prev
+    
+    def midNode(self):
+        return self.__mid().data
+    
+    def __mid(self):
+        slow = self.head
+        fast = self.head
+
+        while fast.next != None and fast.next.next != None:
+            slow = slow.next
+            fast = fast.next.next
+        
+        return slow
+    
+    def merge(self,l2):
+        l3 = MyLinkedList()
+        i = self.head
+        j = l2.head
+        while i!= None and j!= None:
+            if i.data > j.data:
+                l3.addLast(j.data)
+                j = j.next
+            else:
+                l3.addLast(i.data)
+                i = i.next
+        while i != None:
+            l3.addLast(i.data)
+            i = i.next
+        while j!= None:
+            l3.addLast(j.data)
+            j = j.next
+        
+        return l3
+
+    def mergeSort(self):
+        l3 = self.__mergerSortHelper()
+        self.head = l3.head
+
+    def __mergerSortHelper(self):
+        if self.head.next == None:
+            # l3 = MyLinkedList()
+            # l3.head = self.head
+            return self
+        else:
+            midNode = self.__mid()
+            # l1 = MyLinkedList()
+            l2 = MyLinkedList()
+            # l1.head = self.head
+            l2.head = midNode.next
+            midNode.next = None
+
+            left = self.__mergerSortHelper()
+            right = l2.__mergerSortHelper()
+
+            return left.merge(right)
+
+
 
 ll = MyLinkedList()
+# ll2 = MyLinkedList()
+for i in range(1,6):
+    ll.addLast(i+1)
+    ll.addFirst(2*i+3)
+
+# l3 = ll.merge(ll2)
+ll.display()
+ll.mergeSort()
+ll.display()
+# ll.display()
+# ll.kreverse(5)
+# ll.display()
+
+
 # ll.addLast(5)
-ll.addLast(4)
-ll.addLast(3)
-ll.addLast(2)
-ll.addLast(1)
-ll.addAt(5,2)
+# ll.addLast(4)
+# ll.addLast(3)
+# ll.addLast(2)
+# ll.addLast(1)
+# ll.addAt(5,2)
 # print(ll.getLast())
 # print(ll.getFirst())
 # print(ll.getAt(2))
-ll.display()
-ll.reverseR2()
-ll.display()
+# ll.display()
+# ll.reverseR2()
+# ll.display()
 # print(ll.size())
