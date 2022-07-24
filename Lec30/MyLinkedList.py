@@ -1,3 +1,4 @@
+
 class MyLinkedList:
     class Node:
         def __init__(self,val = 0,next = None):
@@ -216,19 +217,143 @@ class MyLinkedList:
             right = l2.__mergerSortHelper()
 
             return left.merge(right)
+    
+    def DummyListForIntersection(self):
+
+        n1= self.Node(1)
+        n2= self.Node(2)
+        n3= self.Node(3)
+        n4= self.Node(4)
+        n5= self.Node(5)
+        n6= self.Node(6)
+        n7= self.Node(7)
+        n8= self.Node(8)
+        n9= self.Node(9)
+        n10= self.Node(10)
+        n11= self.Node(11)
+        n12= self.Node(12)
+        n13= self.Node(13)
+
+
+        n1.next = n2
+        n2.next = n3
+        n3.next = n4
+        n4.next = n5
+        n5.next = n6
+        n6.next = n7
+        n7.next = n8
+        n8.next = n9
+        n9.next = n10
+        n10.next = None
+        n11.next = n12
+        n12.next = n13
+        n13.next = n7
+        self.Intersection(n1,n11)
+
+    def Intersection(self,head1,head2):
+        t1 = head1
+        t2 = head2
+
+        while t1 != t2:
+            if t1 == None:
+                t1 = head2
+            if t2 == None:
+                t2 = head1
+
+            t1 = t1.next
+            t2 = t2.next
+        
+        print("Intersection",t1.data)
+
+
+    def dummyListForCycle(self):
+        n1= self.Node(1)
+        n2= self.Node(2)
+        n3= self.Node(3)
+        n4= self.Node(4)
+        n5= self.Node(5)
+        n6= self.Node(6)
+        n7= self.Node(7)
+        n8= self.Node(8)
+
+        n1.next = n2
+        n2.next = n3
+        n3.next = n4
+        n4.next = n5
+        n5.next = n6
+        n6.next = n7
+        n7.next = n8
+        n8.next = n3
+
+        self.head = n1
+    
+    def cycleDetectionRemoval(self):
+        slow = self.head
+        fast = self.head
+
+        while fast != None and fast.next != None:
+            slow = slow.next
+            fast = fast.next.next
+
+            if slow == fast:
+                # print("Cycle")
+                t1 = self.head
+                t2 = slow
+                while t1.next != t2.next:
+                    t1 = t1.next
+                    t2 = t2.next
+                t2.next = None
+                print("Cycle Removed")
+                break
+        else:
+            print("No Cycle")
+    
+    def fold(self):
+        l2 = MyLinkedList()
+        mid = self.__mid()
+        l2.head = mid.next
+        mid.next = None
+        l2.reverse()
+
+        t1= self.head
+        t2 = l2.head
+
+        cur = self.Node(0)
+        h = cur
+
+        while t1 != None or t2 != None:
+            if t1 != None:
+                cur.next = t1
+                cur = cur.next
+                t1 = t1.next
+            if t2 != None:
+                cur.next = t2
+                cur = cur.next
+                t2 = t2.next
+        
+        self.head = h.next
 
 
 
 ll = MyLinkedList()
+for i in range(1,8):
+    ll.addLast(i)
+ll.display()
+ll.fold()
+ll.display()
+# ll.dummyListForCycle()
+# ll.display()
+# ll.cycleDetectionRemoval()
+# ll.display()
 # ll2 = MyLinkedList()
-for i in range(1,6):
-    ll.addLast(i+1)
-    ll.addFirst(2*i+3)
+# for i in range(1,6):
+#     ll.addLast(i+1)
+#     ll.addFirst(2*i+3)
 
-# l3 = ll.merge(ll2)
-ll.display()
-ll.mergeSort()
-ll.display()
+# # l3 = ll.merge(ll2)
+# ll.display()
+# ll.mergeSort()
+# ll.display()
 # ll.display()
 # ll.kreverse(5)
 # ll.display()
