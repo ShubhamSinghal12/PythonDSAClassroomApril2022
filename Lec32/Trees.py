@@ -196,24 +196,110 @@ class BinaryTree:
 
     def levelbylevelOrder2(self):
         qt = deque()
+        temp = deque()
         qt.append(self.root)
         while qt:
             r = qt.popleft()
             print(r.data,end= " ")
             if r.left:
-                qt.append(r.left)
+                temp.append(r.left)
             if r.right:
-                qt.append(r.right)
+                temp.append(r.right)
+            if not qt:
+                print()
+                qt = temp
+                temp = deque()
         print()
     
+    def zigzag(self):
+        qt = deque()
+        temp = deque()
+        qt.append(self.root)
+        pl = []
+        lvl = 0
+        while qt:
+            r = qt.popleft()
+            pl.append(r.data)
+            if r.left:
+                temp.append(r.left)
+            if r.right:
+                temp.append(r.right)
+            if not qt:
+                if lvl%2 == 0:
+                    print(pl)
+                else:
+                    pl.reverse()
+                    print(pl)
+                pl = []
+                lvl += 1
+                qt = temp
+                temp = deque()
+        print()
 
+    def zigzag2(self):
+        qt = deque()
+        temp = deque()
+        qt.append(self.root)
+        lvl = 0
+        while qt:
+            r = qt.popleft()
+            print(r.data,end= " ")
+            if lvl % 2 == 0:
+                if r.left:
+                    temp.appendleft(r.left)
+                if r.right:
+                    temp.appendleft(r.right)
+            else:
+                if r.right:
+                    temp.appendleft(r.right)
+                if r.left:
+                    temp.appendleft(r.left)
+            if not qt:
+                print()
+                qt = temp
+                temp = deque()
+                lvl += 1
+        print()
+    
+    def mirror(self):
+        self.__mir(self.root)
 
-        
+    def __mir(self,cur):
+        if cur == None:
+            return
+        else:
+            self.__mir(cur.left)
+            self.__mir(cur.right)
+            cur.left,cur.right = cur.right,cur.left
+    
+    def linearize(self):
+        self.__lin(self.root)
+
+    def __lin(self,cur):
+        if cur == None:
+            return None
+        else:
+            if cur.left == None:
+                leftTail = cur
+            else:
+                leftTail = self.__lin(cur.left)
+            if cur.right == None:
+                rightTail = cur
+            else:
+                rightTail = self.__lin(cur.right)
+            
+            leftTail.left = cur.right
+            cur.right = None
+            return rightTail
+            
 
 bt = BinaryTree()
 bt.createTree2()
-bt.levelbylevelOrder()
-# bt.display()
+# bt.zigzag2()
+bt.display()
+bt.linearize()
+print(" ----------------------------- ")
+bt.display()
 # print(bt.maximum())
 # print(bt.size())
 # print(bt.search(400))
