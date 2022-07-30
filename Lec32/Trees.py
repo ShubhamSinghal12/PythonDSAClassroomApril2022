@@ -1,3 +1,6 @@
+from collections import deque
+
+
 class BinaryTree:
     class Node:
         def __init__(self,val = 0,left = None,right = None):
@@ -161,10 +164,55 @@ class BinaryTree:
         else:
             self.__pal(cur.left,clvl+1,lvl)
             self.__pal(cur.right,clvl+1,lvl)
+    
+    def bfs(self):
+        qt = deque()
+        qt.append(self.root)
+        while qt:
+            r = qt.popleft()
+            print(r.data,end= " ")
+            if r.left:
+                qt.append(r.left)
+            if r.right:
+                qt.append(r.right)
+        print()
+
+    def levelbylevelOrder(self):
+        qt = deque()
+        qt.append(self.root)
+        qt.append(None)
+        while len(qt) != 1:
+            r = qt.popleft()
+            if r == None:
+                print()
+                qt.append(None)
+            else:
+                print(r.data,end= " ")
+                if r.left:
+                    qt.append(r.left)
+                if r.right:
+                    qt.append(r.right)
+        print()
+
+    def levelbylevelOrder2(self):
+        qt = deque()
+        qt.append(self.root)
+        while qt:
+            r = qt.popleft()
+            print(r.data,end= " ")
+            if r.left:
+                qt.append(r.left)
+            if r.right:
+                qt.append(r.right)
+        print()
+    
+
+
         
 
 bt = BinaryTree()
 bt.createTree2()
+bt.levelbylevelOrder()
 # bt.display()
 # print(bt.maximum())
 # print(bt.size())
@@ -180,6 +228,6 @@ bt.createTree2()
 # bt.postorder()
 # print()
 
-bt.printAtLevel(2)
+# bt.printAtLevel(2)
     
 
