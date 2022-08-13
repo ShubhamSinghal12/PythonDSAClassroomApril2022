@@ -150,12 +150,124 @@ class BST:
 
             sum = self.__rws(cur.left,sum)
             return sum
+    
+    def pir(self,a,b):
+        self.__in(self.root,a,b)
+        print()
+    
+    def __in(self,cur,a,b):
+        if cur == None:
+            return
+        else:
+            if cur.data >= a:
+                self.__in(cur.left,a,b)
+            if a <= cur.data <= b:
+                print(cur.data,end = " ")
+            if cur.data <= b:
+                self.__in(cur.right,a,b) 
+    
+    def isBSTrange(self):
+        return self.__isBSTr(self.root,-10**4,10**4)
+    
+    def __isBSTr(self,cur,a,b):
+        if cur == None:
+            return True
+        else:
+            if a > cur.data or b < cur.data:
+                return False
+            else:
+                return self.__isBSTr(cur.left,a,cur.data) and self.__isBSTr(cur.right,cur.data,b)
 
-ino = [10,20,30,40,50,60,70]
+    def maximum(self):
+        return self.__max(self.root)
+
+    def __max(self,cur):
+        if cur == None:
+            return -10**7
+        else:
+            lmax = self.__max(cur.left)
+            rmax = self.__max(cur.right)
+
+            return max(lmax,rmax,cur.data)
+
+    def minimum(self):
+        return self.__min(self.root)
+
+    def __min(self,cur):
+        if cur == None:
+            return 10**7
+        else:
+            lmin = self.__min(cur.left)
+            rmin = self.__min(cur.right)
+
+            return min(lmin,rmin,cur.data)
+    
+    def isBST1(self):
+        return self.__isBST1(self.root)
+    
+    def __isBST1(self,cur):
+        if cur == None:
+            return True
+        else:
+            curBST = False
+            if cur.data >= self.__max(cur.left) and cur.data <= self.__min(cur.right):
+                curBST = True
+            
+            return curBST and self.__isBST1(cur.left) and self.__isBST1(cur.right)
+    
+    def isBST2(self):
+        return self.__isBST2(self.root)[0]
+    
+    def __isBST2(self,cur):
+        if cur == None:
+            return True,-10**4,10**4
+        else:
+            lisBst,lmax,lmin = self.__isBST2(cur.left)
+            risBst,rmax,rmin = self.__isBST2(cur.right)
+            curBST = False
+            if cur.data >= lmax and cur.data <= rmin:
+                curBST = True
+            
+            return curBST and lisBst and risBst, max(lmax,rmax,cur.data), min(lmin,rmin,cur.data)
+
+    def maxBST(self):
+        return self.__disp(self.__maxBST(self.root)[3])
+    
+    def __maxBST(self,cur):
+        if cur == None:
+            return True,-10**4,10**4,None,0,0
+        else:
+            lisBst,lmax,lmin, lmaxBSTroot, lsize, lmaxBSTsize = self.__maxBST(cur.left)
+            risBst,rmax,rmin, rmaxBSTroot, rsize, rmaxBSTsize = self.__maxBST(cur.right)
+            
+            cisBst = False
+            if cur.data >= lmax and cur.data <= rmin:
+                cisBst = True
+            
+            cisBst = cisBst and lisBst and risBst
+            cmax = max(lmax,rmax,cur.data)
+            cmin = min(lmin,rmin,cur.data)
+            csize = lsize + rsize + 1
+
+            if cisBst:
+                cmaxBSTroot = cur
+                cmaxBSTsize = csize
+            else:
+                cmaxBSTroot = lmaxBSTroot if lmaxBSTsize >= rmaxBSTsize else rmaxBSTroot
+                cmaxBSTsize = lmaxBSTsize if lmaxBSTsize >= rmaxBSTsize else rmaxBSTsize
+            
+            return cisBst,cmax,cmin, cmaxBSTroot, csize, cmaxBSTsize
+
+
+
+ino = [10,20,30,40,500,60,70]
 bst = BST()
 bst.createTree(ino)
-bst.rws()
-bst.display()
+# bst.display()
+bst.maxBST()
+# bst.rws()
+# bst.display()
+# bst.pir(30,50)
 # bst.add2(15)
 # bst.add2(45)
 # bst.display()
