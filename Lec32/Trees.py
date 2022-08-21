@@ -18,6 +18,8 @@ class BinaryTree:
         n6 = self.Node(60)
         n7 = self.Node(70)
         n8 = self.Node(80)
+        n9 = self.Node(90)
+        n10 = self.Node(100)
 
         self.root = n1
         n1.left = n2
@@ -26,7 +28,9 @@ class BinaryTree:
         n2.right = n5
         n5.left = n8
         n3.left = n6
-        n6.right = n7
+        n3.right = n7
+        n6.right = n9
+        n9.left = n10
     
     def createTree(self):
         self.root = self.__ct(None,True)
@@ -291,15 +295,64 @@ class BinaryTree:
             leftTail.left = cur.right
             cur.right = None
             return rightTail
-            
+    
+    def verticalOrder(self):
+        vdict = {}
+        self.__vo(self.root,0,vdict)
+        vk = vdict.keys()
+        svk = sorted(vk)
+        for i in svk:
+            print(i," : ",vdict[i])
+
+
+    def __vo(self,cur,vlvl,vdict):
+        if cur == None:
+            return
+        else:
+            # print(cur.data,end = " ")
+            if vlvl in vdict:
+                vdict.get(vlvl).append(cur.data)
+            else:
+                vdict[vlvl] = [cur.data]
+            self.__vo(cur.left,vlvl-1,vdict)
+            self.__vo(cur.right,vlvl+1,vdict)
+    
+
+    def TopView(self):
+        vdict = {}
+        self.__tv(self.root,0,vdict,0)
+        vk = vdict.keys()
+        svk = sorted(vk)
+        for i in svk:
+            print(i," : ",vdict[i][1])
+
+
+    def __tv(self,cur,vlvl,vdict,lvl):
+        if cur == None:
+            return
+        else:
+            if vlvl not in vdict or vdict.get(vlvl)[0] > lvl:
+                vdict[vlvl] = (lvl,cur.data)
+
+            # if vlvl in vdict:
+            #     if vdict.get(vlvl)[0] > lvl:
+            #         vdict[vlvl] = (lvl,cur.data)
+            # else:
+            #     vdict[vlvl] = (lvl,cur.data)
+            self.__tv(cur.left,vlvl-1,vdict,lvl+1)
+            self.__tv(cur.right,vlvl+1,vdict,lvl+1)
+
 
 bt = BinaryTree()
 bt.createTree2()
+# bt.verticalOrder()
+bt.TopView()
+
 # bt.zigzag2()
-bt.display()
-bt.linearize()
-print(" ----------------------------- ")
-bt.display()
+# bt.display()
+# bt.linearize()
+# print(" ----------------------------- ")
+# bt.display()
 # print(bt.maximum())
 # print(bt.size())
 # print(bt.search(400))
