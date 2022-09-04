@@ -1,3 +1,6 @@
+from collections import deque
+
+
 class MyGraph:
     def __init__(self,nv = 0):
         self.gp = {}
@@ -61,24 +64,105 @@ class MyGraph:
             print(ans+str(v))
         else:
             visited.add(u)
-            f = False
             for nbrs in self.gp[u]:
                 if nbrs not in visited:
                     self.__pap(nbrs,v,visited,ans +"{} - ".format(u))
             visited.remove(u)
+    
+    def hasPathBFS(self,u,v):
+        qt = deque()
+        qt.append(u)
+        visited = set()
+        while len(qt) != 0:
+            t = qt.popleft()
+            if t in visited:
+                continue
+            if t == v:
+                return True
+            
+            visited.add(t)
+            for nbrs in self.gp[t]:
+                if nbrs not in visited:
+                    qt.append(nbrs)
+        return False
+
+    def BFST(self):
+        qt = deque()
+        visited = set()
+        for u in self.gp:
+            if u in visited:
+                continue
+            qt.append(u)
+            while len(qt) != 0:
+                t = qt.popleft()
+                if t in visited:
+                    continue
+                
+                visited.add(t)
+                print(t,end=" ")
+                for nbrs in self.gp[t]:
+                    if nbrs not in visited:
+                        qt.append(nbrs)
+        print()
+    
+    def isCycle(self):
+        qt = deque()
+        visited = set()
+        for u in self.gp:
+            if u in visited:
+                continue
+            qt.append(u)
+            while len(qt) != 0:
+                t = qt.popleft()
+                if t in visited:
+                    return True
+                
+                visited.add(t)
+                for nbrs in self.gp[t]:
+                    if nbrs not in visited:
+                        qt.append(nbrs)
+        return False
+    
+    def noOfConnectedComponents(self):
+        qt = deque()
+        visited = set()
+        nc = 0
+        for u in self.gp:
+            if u in visited:
+                continue
+            qt.append(u)
+            nc += 1
+            while len(qt) != 0:
+                t = qt.popleft()
+                if t in visited:
+                    continue
+                
+                visited.add(t)
+                for nbrs in self.gp[t]:
+                    if nbrs not in visited:
+                        qt.append(nbrs)
+        return nc
+    
+    def isTree(self):
+        return self.isCycle() == False and self.noOfConnectedComponents() == 1
+    
+    def isConnected(self):
+        return self.noOfConnectedComponents() == 1
+        
 
 gr = MyGraph(7)
 gr.addEdge(1,2,10)
 gr.addEdge(2,3,20)
-gr.addEdge(3,4,30)
+# gr.addEdge(3,4,30)
 gr.addEdge(1,4,50)
 gr.addEdge(4,5,60)
 gr.addEdge(5,6,90)
 gr.addEdge(5,7,7)
-gr.addEdge(6,7,5)
+# gr.addEdge(6,7,5)
 gr.addVertex(8)
 # gr.addEdge(7,8,100)
 # gr.removeVertex(4)
 gr.display()
-gr.printAllPath(1,6)
-
+# print(gr.hasPathBFS(1,8))
+# gr.printAllPath(1,6)
+print(gr.noOfConnectedComponents())
